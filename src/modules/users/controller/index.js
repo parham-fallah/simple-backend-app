@@ -43,7 +43,15 @@ export const updateUserController = async (req, res) => {
     }
 }
 
-export const deleteUserController = (req, res) => {
-    res.send({ message: `Delete user by id: ${req.params.userId}` });
+export const deleteUserController = async (req, res) => {
+    const userId = req.params.userId;
+
+    const deleteResult = await db.delete(users).where(eq(users.id, userId));
+
+    if (deleteResult.rowCount < 1) {
+        res.status(404).send({ message: 'User not found' });
+    } else {
+        res.send({ message: `User deleted successfully`, deleteResult });
+    }
 }
 
