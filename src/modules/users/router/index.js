@@ -1,22 +1,21 @@
 import express from 'express';
 
+import { 
+    createUserController, 
+    getUserController, 
+    updateUserController,
+    deleteUserController
+} from '../controller/index.js';
+
 const usersRouter = express.Router();
 
-usersRouter.post('/', (req, res) => {
-    res.send({ message: 'Create user route' });
-});
+usersRouter.post('/', createUserController);
 
-usersRouter.get('/:userId', (req, res) => {
-    res.send({ message: 'Get user by id' });
-});
+usersRouter.get('/:userId', getUserController);
 
-usersRouter.put('/:userId', (req, res) => {
-    res.send({ message: 'Update user by id' });
-});
+usersRouter.put('/:userId', updateUserController);
 
-usersRouter.delete('/:userId', (req, res) => {
-    res.send({ message: 'Delete user by id' });
-});
+usersRouter.delete('/:userId', deleteUserController);
 
 export {
     usersRouter
