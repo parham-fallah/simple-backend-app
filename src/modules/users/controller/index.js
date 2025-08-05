@@ -27,8 +27,20 @@ export const getUserController = async (req, res) => {
     }
 }
 
-export const updateUserController = (req, res) => {
-    res.send({ message: `Update user by id: ${req.params.userId}` });
+export const updateUserController = async (req, res) => {
+    const { email, password } = req.body;
+    const userId = req.params.userId;
+
+    const updateResult = await db
+        .update(users)
+        .set({email, passwordHash: password})
+        .where(eq(users.id, userId));
+
+    if (updateResult.rowCount < 1) {
+        res.status(404).send({ message: 'User not found' });
+    } else {
+        res.send({ message: `User updated successfully`, updateResult });
+    }
 }
 
 export const deleteUserController = (req, res) => {
