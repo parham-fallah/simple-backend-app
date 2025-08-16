@@ -1,29 +1,25 @@
-import { eq } from 'drizzle-orm';
-
-import { db } from '../../../core/database/connection.js';
-import { users } from '../../../core/database/schema.js';
+import { 
+    createUser, 
+    getUser, 
+    updateUser, 
+    deleteUser 
+} from '../model/index.js';
 
 export const createUserController = async (req, res) => {
     const { email, password } = req.body;
-    const insertResult = await db.insert(users).values({
-        email,
-        passwordHash: password,
-    });
+    const insertResult = await createUser(email, password);
     res.send({ message: 'User created successfully', insertResult });
 }
 
 export const getUserController = async (req, res) => {
     const userId = req.params.userId;
     
-    const user = await db
-        .select({userId: users.id, email: users.email, createdAt: users.createdAt})
-        .from(users)
-        .where(eq(users.id, userId));
+    const user = await getUser(userId);
     
-    if (user.length < 1) {
-        res.status(404).send({ message: 'User not found' });
+    if (user) {
+        res.send(user);
     } else {
-        res.send(user[0]);
+        res.status(404).send({ message: 'User not found' });
     }
 }
 
@@ -31,10 +27,7 @@ export const updateUserController = async (req, res) => {
     const { email, password } = req.body;
     const userId = req.params.userId;
 
-    const updateResult = await db
-        .update(users)
-        .set({email, passwordHash: password})
-        .where(eq(users.id, userId));
+    const updateResult = await updateUser(userId, email, password);
 
     if (updateResult.rowCount < 1) {
         res.status(404).send({ message: 'User not found' });
@@ -46,7 +39,7 @@ export const updateUserController = async (req, res) => {
 export const deleteUserController = async (req, res) => {
     const userId = req.params.userId;
 
-    const deleteResult = await db.delete(users).where(eq(users.id, userId));
+    const deleteResult = await deleteUser(userId);
 
     if (deleteResult.rowCount < 1) {
         res.status(404).send({ message: 'User not found' });
