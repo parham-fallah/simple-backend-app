@@ -3,13 +3,6 @@ import { eq } from 'drizzle-orm';
 import { db } from '../../../core/database/connection.js';
 import { users } from '../../../core/database/schema.js';
 
-export async function createUser(email, password) {
-    const insertResult = await db.insert(users).values({
-        email,
-        passwordHash: password,
-    });
-    return insertResult;
-}
 
 export async function getUser(userId) {
     const user = await db
