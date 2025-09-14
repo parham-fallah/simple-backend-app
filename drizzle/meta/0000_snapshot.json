@@ -1,41 +1,9 @@
 {
-  "id": "d026f6a2-fd66-4341-8263-12816490dc5e",
+  "id": "7a5a0d62-c59d-4861-95e0-22a03c508bce",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "note.categories": {
-      "name": "categories",
-      "schema": "note",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(128)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "note.notes": {
       "name": "notes",
       "schema": "note",
@@ -52,12 +20,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "category_id": {
-          "name": "category_id",
-          "type": "serial",
-          "primaryKey": false,
-          "notNull": true
-        },
         "title": {
           "name": "title",
           "type": "varchar(256)",
@@ -69,6 +31,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'todo'"
         },
         "created_at": {
           "name": "created_at",
@@ -87,20 +56,6 @@
           "schemaTo": "note",
           "columnsFrom": [
             "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "notes_category_id_categories_id_fk": {
-          "name": "notes_category_id_categories_id_fk",
-          "tableFrom": "notes",
-          "tableTo": "categories",
-          "schemaTo": "note",
-          "columnsFrom": [
-            "category_id"
           ],
           "columnsTo": [
             "id"
