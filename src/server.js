@@ -12,7 +12,10 @@ const app = express();
 const port = config.server.port;
 
 
-app.use(cors());
+app.use(cors({
+  origin: config.server.corsOrigin || true, // Set to your frontend origin or true for all
+  credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
 
