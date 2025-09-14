@@ -23,7 +23,6 @@ export const loginController = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await getUserByEmail(email);
-        console.log('\n user ==> ', user);
         const userInfoIsValid = user ? await comparePassword(password, user.passwordHash) : false;
         
         if (!userInfoIsValid) {
