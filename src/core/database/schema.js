@@ -16,8 +16,8 @@ export const users = noteSchema.table('users', {
 export const notes = noteSchema.table('notes', {
   id: serial('id').primaryKey(),
   userId: uuid('user_id').notNull().references(() => users.id),
-  categoryId: serial('category_id').notNull().references(() => categories.id),
   title: varchar('title', { length: 256 }).notNull(),
   content: text('content').notNull(),
+  status: varchar('status', { length: 50 }).notNull().default('todo'), // e.g., 'todo', 'in-progress', 'done'
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
