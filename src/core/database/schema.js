@@ -12,13 +12,6 @@ export const users = noteSchema.table('users', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
-// Categories table
-export const categories = noteSchema.table('categories', {
-  id: serial('id').primaryKey(),
-  name: varchar('name', { length: 128 }).notNull(),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-});
-
 // Notes table
 export const notes = noteSchema.table('notes', {
   id: serial('id').primaryKey(),
