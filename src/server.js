@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 
 import { config } from './core/config/index.js';
 import { authMiddleware } from './core/middleware/auth.js';
+import { logger } from './core/middleware/logger.js';
 
 import { usersRouter } from './modules/users/router/index.js';
 import { authRouter } from './modules/auth/router/index.js';
@@ -18,6 +19,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(logger);
 
 // Defining routes
 app.use('/auth', authRouter);
