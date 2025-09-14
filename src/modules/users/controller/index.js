@@ -9,7 +9,8 @@ import { hashPassword } from '../../../core/utils/encryption.js';
 
 export const getUserController = async (req, res) => {
     try {
-        const userId = req.params.userId;
+        console.log(req.user);
+        const userId = req.user.id;
         const user = await getUser(userId);
         if (user) {
             res.send(user);
@@ -25,7 +26,7 @@ export const getUserController = async (req, res) => {
 export const updateUserController = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const userId = req.params.userId;
+        const userId = req.user.id;
         const hashedPassword = await hashPassword(password);
 
         const updateResult = await updateUser(userId, email, hashedPassword);
@@ -43,7 +44,7 @@ export const updateUserController = async (req, res) => {
 
 export const deleteUserController = async (req, res) => {
     try {
-        const userId = req.params.userId;
+        const userId = req.user.id;
 
         const deleteResult = await deleteUser(userId);
 

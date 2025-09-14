@@ -30,7 +30,10 @@ export const loginController = async (req, res) => {
         }
 
         const jwtToken = jwt.sign(
-            { userId: user.id, email: user.email }, 
+            { 
+                id: user.id, 
+                email: user.email 
+            }, 
             config.auth.jwtSecret,
             { expiresIn: '1d' }
         );

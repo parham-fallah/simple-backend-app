@@ -7,9 +7,9 @@ import {
 } from '../controller/index.js';
 
 const usersRouter = express.Router();
-usersRouter.get('/:userId', getUserController);
-usersRouter.put('/:userId', updateUserController);
-usersRouter.delete('/:userId', deleteUserController);
+usersRouter.get('/', getUserController);
+usersRouter.put('/', updateUserController);
+usersRouter.delete('/', deleteUserController);
 
 export {
     usersRouter
