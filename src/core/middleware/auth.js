@@ -1,13 +1,12 @@
-import jwt from 'jsonwebtoken';
-import { config } from '../config/index.js';
+import {verifyJwt, JWT_TOKEN_KEY_NAME} from '../utils/jwt.js';
 
 export const authMiddleware = (req, res, next) => {
     try {
-        const token = req.cookies?.authToken;
+        const token = req.cookies ? req.cookies[JWT_TOKEN_KEY_NAME] : null;
         if (!token) {
             return res.status(401).json({ error: 'Unauthorized!' });
         }
-        const decodedTokenData = jwt.verify(token, config.auth.jwtSecret);
+        const decodedTokenData = verifyJwt(token);
         req.user = decodedTokenData;
         next();
     } catch (error) {

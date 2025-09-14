@@ -1,9 +1,6 @@
-import jwt from 'jsonwebtoken';
-
 import { createUser, getUserByEmail } from '../model/index.js';
 import { hashPassword, comparePassword } from '../../../core/utils/encryption.js';
-import { config } from '../../../core/config/index.js';
-
+import { signJwt, JWT_TOKEN_KEY_NAME } from '../../../core/utils/jwt.js';
 
 
 export const registerController = async (req, res) => {
@@ -29,17 +26,15 @@ export const loginController = async (req, res) => {
             res.status(401).send({ message: 'Invalid email or password' });
         }
 
-        const jwtToken = jwt.sign(
+        const jwtToken = signJwt(
             { 
                 id: user.id, 
                 email: user.email 
-            }, 
-            config.auth.jwtSecret,
-            { expiresIn: '1d' }
+            },
         );
 
         res.cookie(
-            'authToken',
+            JWT_TOKEN_KEY_NAME,
             jwtToken,
             {
                 httpOnly : true,
